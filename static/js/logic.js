@@ -129,13 +129,15 @@ function createMap(earthquakes) {
         var magnitude = [0, 1, 2, 3, 4, 5],
             labels = [];
 
-        div.innerHTML = "<h4 style='margin:4px'>Magnitude</h4>";
+        div.innerHTML = "<div style='background-color:white; padding: .5em;'><h4 style='background-color:white; padding:.5em'>Magnitude</h4><ul>";
 
         for (var i = 0; i < magnitude.length; i++) {
-             div.innerHTML +=
-             '<li style=\"background-color:' + getColor(magnitude[i] + 1) + ';\"></li> '+ 
-                magnitude[i] + (magnitude[i + 1] ? '&ndash;' + magnitude[i + 1] + '<br>' : '+');
+             div.innerHTML += 
+             '<li style=\"list-style:none; padding:.5em; background-color:' + getColor(magnitude[i] + 1) + ';\"> '+ 
+                magnitude[i] + (magnitude[i + 1] ? '&ndash;' + magnitude[i + 1] + '<br>' : '+')
+                "</li>";
         }
+       div.innerHTML += "</ul></div>"; 
 
         return div;
     };
