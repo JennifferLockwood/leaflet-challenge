@@ -7,6 +7,29 @@ d3.json(queryUrl, function(data) {
     createFeatures(data);
 });
 
+function markerSize(magnitude) {
+    return (magnitude + 1) * 3.5 ;
+}
+
+function getColor(mag) {
+    if (mag > 5) {
+        return "Red";
+    }
+    if (mag >  4) {
+        return "SandyBrown";
+    }
+    if (mag > 3) {
+        return "Salmon"
+    }
+    if (mag > 2) {
+        return "Yellow";
+    }
+    if (mag > 1) {
+        return "Mint";
+    }
+    return "SeaShell";
+}
+
 function createFeatures(earthquakeData) {
 
     // Define a function we want to run once for each feature in the features array
@@ -14,10 +37,10 @@ function createFeatures(earthquakeData) {
     function styleInfo(feature) {
         return {
           opacity: 1,
-          fillOpacity: 1,
+          fillOpacity: .5,
           fillColor: getColor(feature.properties.mag),
           color: "#000000",
-          radius: getRadius(feature.properties.mag),
+          radius: markerSize(feature.properties.mag),
           stroke: true,
           weight: 0.5
         };
@@ -32,7 +55,10 @@ function createFeatures(earthquakeData) {
     // Run the onEachFeature function once for each piece of data in the array
     var earthquakes = L.geoJSON(earthquakeData, {
         onEachFeature: onEachFeature,
-        styleInfo: styleInfo
+        pointToLayer: function(feature, latlong) {
+            return L.circleMarker(latlong);
+        },
+        style:styleInfo
     });
   
     // Sending our earthquakes layer to the createMap function
